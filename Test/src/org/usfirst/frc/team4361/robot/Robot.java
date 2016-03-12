@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.*;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  * test addition
- * test addition two
+ * test addition three
  */
 public class Robot extends IterativeRobot {
     final String defaultAuto = "Default";
