@@ -3,6 +3,7 @@ package org.usfirst.frc.team4361.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.CANTalon;
@@ -25,6 +26,8 @@ public class Robot extends IterativeRobot {
     String autoSelected;
     SendableChooser chooser;
     Talon[] talon = new Talon[4];
+    Tracking track;
+    NetworkTable table;
 	
     /**
      * This function is run when the robot is first started up and should be
@@ -35,7 +38,7 @@ public class Robot extends IterativeRobot {
         chooser.addDefault("Default Auto", defaultAuto);
         chooser.addObject("My Auto", customAuto);
         SmartDashboard.putData("Auto choices", chooser);
-        
+        track = new Tracking(105,147);
         for(int i = 0; i < talon.length; i++)
         {
         	talon[i] = new Talon(i);
@@ -80,11 +83,19 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
     	Joystick left = new Joystick(0);
     	Joystick right = new Joystick(1);
+    	table = NetworkTable.getTable("GRIP/myContoursReport");
+    	double[] deafultVal = new double[0];
+    	double[] centerX = table.getNumberArray("centerX", deafultVal);
+    	double[] centerY = table.getNumberArray("centerY", deafultVal);
    
     	talon[0].set(-right.getAxis(Joystick.AxisType.kY));
     	talon[1].set(-right.getAxis(Joystick.AxisType.kY));
     	talon[2].set(left.getAxis(Joystick.AxisType.kY));
     	talon[3].set(left.getAxis(Joystick.AxisType.kY));
+    	if(centerX.length>0)
+    	{
+    		track.track(centerX[0], centerY[0]);
+    	}
         
     }
     
