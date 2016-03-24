@@ -24,7 +24,7 @@ public class Robot extends IterativeRobot {
     final String customAuto = "My Auto";
     String autoSelected;
     SendableChooser chooser;
-    CANTalon[] talon = new CANTalon[4];
+    Talon[] talon = new Talon[4];
 	
     /**
      * This function is run when the robot is first started up and should be
@@ -38,7 +38,7 @@ public class Robot extends IterativeRobot {
         
         for(int i = 0; i < talon.length; i++)
         {
-        	talon[i] = new CANTalon(i);
+        	talon[i] = new Talon(i);
         }
     }
     
@@ -81,10 +81,10 @@ public class Robot extends IterativeRobot {
     	Joystick left = new Joystick(0);
     	Joystick right = new Joystick(1);
    
-    	talon[0].set(left.getAxis(Joystick.AxisType.kY));
-    	talon[1].set(left.getAxis(Joystick.AxisType.kY));
-    	talon[2].set(-right.getAxis(Joystick.AxisType.kY));
-    	talon[3].set(-right.getAxis(Joystick.AxisType.kY));
+    	talon[0].set(-right.getAxis(Joystick.AxisType.kY));
+    	talon[1].set(-right.getAxis(Joystick.AxisType.kY));
+    	talon[2].set(left.getAxis(Joystick.AxisType.kY));
+    	talon[3].set(left.getAxis(Joystick.AxisType.kY));
         
     }
     
