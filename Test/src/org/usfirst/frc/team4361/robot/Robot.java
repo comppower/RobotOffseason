@@ -94,7 +94,39 @@ public class Robot extends IterativeRobot {
     	talon[3].set(left.getAxis(Joystick.AxisType.kY));
     	if(centerX.length>0)
     	{
-    		track.track(centerX[0], centerY[0]);
+    		String dir = track.track(centerX[0], centerY[0]);
+    		if(dir.equals("left"))
+    		{
+    			talon[0].set(0);
+    			talon[1].set(0);
+    			talon[2].set(-.2);
+    			talon[3].set(-.2);
+    		}
+    		if(dir.equals("right"))
+    		{
+    			talon[0].set(.2);
+    			talon[1].set(.2);
+    			talon[2].set(0);
+    			talon[3].set(0);
+    		}
+    		if(dir.equals("forward"))
+    		{
+    			talon[0].set(.2);
+    			talon[1].set(.2);
+    			talon[2].set(-.2);
+    			talon[3].set(-.2);
+    		}
+    		if(dir.equals("back"))
+    		{
+    			talon[0].set(-.2);
+    			talon[1].set(-.2);
+    			talon[2].set(.2);
+    			talon[3].set(.2);
+    		}
+    		else
+    		{
+    		}
+    		
     	}
         
     }

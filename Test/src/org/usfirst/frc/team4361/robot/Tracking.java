@@ -10,7 +10,7 @@ public class Tracking {
 		corY=inX;
 	}
 	//set the current X,Y and area values (reverse them when they are inputed like so
-	public void track(double y, double x)
+	public String track(double y, double x)
 	{
 		//the image is rotated 270 degrees, so the parameters must be passed in terms of -y,x
 		//print the current conditions
@@ -25,10 +25,12 @@ public class Tracking {
 			if(x>corX)
 			{
 				System.out.println("Rotate Right");
+				return "right";
 			}
 			if(x<corX)
 			{
 				System.out.println("Rotate Left");
+				return "left";
 			}
 		}
 		if(Math.abs(y-corY)>.1)
@@ -36,17 +38,20 @@ public class Tracking {
 			if(y<corY)
 			{
 				System.out.println("Move Back");
+				return "back";
 			}
 			if(y>corY)
 			{
 				System.out.println("Move Forward");
+				return "forward";
 			}
 		}
 		if(Math.abs(y-corY)/corY<.1 && Math.abs(x-corX)/corX<.1)
 		{
 			System.out.println("shoot");
+			return "shoot";
 		}
-		
+		return "null";
 	}
 
 }
