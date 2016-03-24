@@ -38,7 +38,7 @@ public class Robot extends IterativeRobot {
         chooser.addDefault("Default Auto", defaultAuto);
         chooser.addObject("My Auto", customAuto);
         SmartDashboard.putData("Auto choices", chooser);
-        track = new Tracking(105,147);
+        track = new Tracking(244,181);
         for(int i = 0; i < talon.length; i++)
         {
         	talon[i] = new Talon(i);
@@ -123,10 +123,7 @@ public class Robot extends IterativeRobot {
     			talon[2].set(.2);
     			talon[3].set(.2);
     		}
-    		else
-    		{
-    		}
-    		
+
     	}
         
     }
