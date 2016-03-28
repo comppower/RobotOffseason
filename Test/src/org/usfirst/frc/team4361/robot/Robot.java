@@ -88,11 +88,8 @@ public class Robot extends IterativeRobot {
     	double[] centerX = table.getNumberArray("centerX", deafultVal);
     	double[] centerY = table.getNumberArray("centerY", deafultVal);
    
-    	talon[0].set(-right.getAxis(Joystick.AxisType.kY));
-    	talon[1].set(-right.getAxis(Joystick.AxisType.kY));
-    	talon[2].set(left.getAxis(Joystick.AxisType.kY));
-    	talon[3].set(left.getAxis(Joystick.AxisType.kY));
-    	if(centerX.length>0)
+    	
+    	if(centerX.length>0 && right.getRawButton(4))
     	{
     		String dir = track.track(centerX[0], centerY[0]);
     		if(dir.equals("left"))
@@ -125,7 +122,47 @@ public class Robot extends IterativeRobot {
     		}
 
     	}
+    	else
+    	{
+    		talon[0].set(-right.getAxis(Joystick.AxisType.kY));
+        	talon[1].set(-right.getAxis(Joystick.AxisType.kY));
+        	talon[2].set(left.getAxis(Joystick.AxisType.kY));
+        	talon[3].set(left.getAxis(Joystick.AxisType.kY));
+    	}
         
+    	
+    	if(right.getPOV()==0)
+    	{
+    		talon[4].set(.5);
+    		talon[5].set(-.5);
+    	}
+    	else if(right.getPOV()==180)
+    	{
+    		talon[4].set(-.5);
+    		talon[5].set(.5);
+    	}
+    	else if(right.getPOV()==-1)
+    	{
+    		talon[4].set(0);
+    		talon[5].set(0);
+    	}
+    	
+    	if(right.getRawButton(1))
+    	{
+    		talon[6].set(1);
+    		talon[7].set(-1);
+    	}
+    	else if(left.getRawButton(1))
+    	{
+    		talon[6].set(-1);
+    		talon[7].set(1);
+    	}
+    	else
+    	{
+    		talon[6].set(0);
+    		talon[7].set(0);
+    	}
+    	
     }
     
     /**
