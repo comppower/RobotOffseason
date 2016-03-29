@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.*;
+import com.kauailabs.navx.frc.*;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -25,9 +26,10 @@ public class Robot extends IterativeRobot {
     final String customAuto = "My Auto";
     String autoSelected;
     SendableChooser chooser;
-    Talon[] talon = new Talon[4];
+    Talon[] talon = new Talon[9];
     Tracking track;
     NetworkTable table;
+    AHRS ahrs;
 	
     /**
      * This function is run when the robot is first started up and should be
@@ -133,34 +135,34 @@ public class Robot extends IterativeRobot {
     	
     	if(right.getPOV()==0)
     	{
-    		talon[4].set(.5);
-    		talon[5].set(-.5);
+    		talon[6].set(.5);
+    		talon[7].set(-.5);
     	}
     	else if(right.getPOV()==180)
     	{
-    		talon[4].set(-.5);
-    		talon[5].set(.5);
+    		talon[6].set(-.5);
+    		talon[7].set(.5);
     	}
-    	else if(right.getPOV()==-1)
+    	else 
     	{
-    		talon[4].set(0);
-    		talon[5].set(0);
+    		talon[6].set(0);
+    		talon[7].set(0);
     	}
     	
     	if(right.getRawButton(1))
     	{
-    		talon[6].set(1);
-    		talon[7].set(-1);
+    		talon[4].set(1);
+    		talon[5].set(-1);
     	}
     	else if(left.getRawButton(1))
     	{
-    		talon[6].set(-1);
-    		talon[7].set(1);
+    		talon[4].set(-1);
+    		talon[5].set(1);
     	}
     	else
     	{
-    		talon[6].set(0);
-    		talon[7].set(0);
+    		talon[4].set(0);
+    		talon[5].set(0);
     	}
     	
     }
@@ -169,6 +171,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during test mode
      */
     public void testPeriodic() {
+    	talon[8].set(0);
     
     }
     
