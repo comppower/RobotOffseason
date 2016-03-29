@@ -135,13 +135,13 @@ public class Robot extends IterativeRobot {
     	
     	if(right.getPOV()==0)
     	{
-    		talon[6].set(.5);
-    		talon[7].set(-.5);
+    		talon[6].set(1);
+    		talon[7].set(-1);
     	}
     	else if(right.getPOV()==180)
     	{
-    		talon[6].set(-.5);
-    		talon[7].set(.5);
+    		talon[6].set(-1);
+    		talon[7].set(1);
     	}
     	else 
     	{
