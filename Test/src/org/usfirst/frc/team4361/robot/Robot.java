@@ -38,7 +38,7 @@ public class Robot extends IterativeRobot {
         chooser.addDefault("Default Auto", defaultAuto);
         chooser.addObject("My Auto", customAuto);
         SmartDashboard.putData("Auto choices", chooser);
-        track = new Tracking(244,181);
+        track = new Tracking(108,89);
         for(int i = 0; i < talon.length; i++)
         {
         	talon[i] = new Talon(i);
@@ -88,11 +88,7 @@ public class Robot extends IterativeRobot {
     	double[] centerX = table.getNumberArray("centerX", deafultVal);
     	double[] centerY = table.getNumberArray("centerY", deafultVal);
    
-    	talon[0].set(-right.getAxis(Joystick.AxisType.kY));
-    	talon[1].set(-right.getAxis(Joystick.AxisType.kY));
-    	talon[2].set(left.getAxis(Joystick.AxisType.kY));
-    	talon[3].set(left.getAxis(Joystick.AxisType.kY));
-    	if(centerX.length>0)
+    	if(centerX.length>0&&left.getRawButton(3))
     	{
     		String dir = track.track(centerX[0], centerY[0]);
     		if(dir.equals("left"))
@@ -123,7 +119,20 @@ public class Robot extends IterativeRobot {
     			talon[2].set(.2);
     			talon[3].set(.2);
     		}
-
+    		if(dir.equals("shoot"))
+    		{
+    			talon[0].set(-right.getAxis(Joystick.AxisType.kY));
+            	talon[1].set(-right.getAxis(Joystick.AxisType.kY));
+            	talon[2].set(left.getAxis(Joystick.AxisType.kY));
+            	talon[3].set(left.getAxis(Joystick.AxisType.kY));
+    		}
+    	}
+    	else 
+    	{
+    	 	talon[0].set(-right.getAxis(Joystick.AxisType.kY));
+        	talon[1].set(-right.getAxis(Joystick.AxisType.kY));
+        	talon[2].set(left.getAxis(Joystick.AxisType.kY));
+        	talon[3].set(left.getAxis(Joystick.AxisType.kY));
     	}
         
     }
