@@ -33,7 +33,7 @@ public class Tracking {
 				return "left";
 			}
 		}
-		if(Math.abs(y-corY)>.25)
+		if(Math.abs(y-corY)>.1)
 		{
 			if(y<corY)
 			{
@@ -46,7 +46,7 @@ public class Tracking {
 				return "forward";
 			}
 		}
-		if(Math.abs(y-corY)/corY<.25 && Math.abs(x-corX)/corX<.25)
+		if(Math.abs(y-corY)/corY<.15 && Math.abs(x-corX)/corX<.15)
 		{
 			System.out.println("shoot");
 			return "shoot";

@@ -39,8 +39,8 @@ public class Robot extends IterativeRobot {
         chooser.addDefault("Default Auto", defaultAuto);
         chooser.addObject("My Auto", customAuto);
         SmartDashboard.putData("Auto choices", chooser);
-        track = new Tracking(127,88);
-        ave = new WeightedAverage(10,300);
+        track = new Tracking(128,86);
+        ave = new WeightedAverage(10,350);
         for(int i = 0; i < talon.length; i++)
         {
         	talon[i] = new Talon(i);
@@ -114,29 +114,29 @@ public class Robot extends IterativeRobot {
     		{
     			talon[0].set(0);
     			talon[1].set(0);
-    			talon[2].set(-filter);
-    			talon[3].set(-filter);
+    			talon[2].set(-.15);
+    			talon[3].set(-.15);
     		}
     		if(dir.equals("right"))
     		{
-    			talon[0].set(filter);
-    			talon[1].set(filter);
+    			talon[0].set(.15);
+    			talon[1].set(.15);
     			talon[2].set(0);
     			talon[3].set(0);
     		}
     		if(dir.equals("forward"))
     		{
-    			talon[0].set(filter);
-    			talon[1].set(filter);
-    			talon[2].set(-filter);
-    			talon[3].set(-filter);
+    			talon[0].set(.15);
+    			talon[1].set(.15);
+    			talon[2].set(-.15);
+    			talon[3].set(-.15);
     		}
     		if(dir.equals("back"))
     		{
-    			talon[0].set(-filter);
-    			talon[1].set(-filter);
-    			talon[2].set(filter);
-    			talon[3].set(filter);
+    			talon[0].set(-.15);
+    			talon[1].set(-.15);
+    			talon[2].set(.15);
+    			talon[3].set(.15);
     		}
     		if(dir.equals("shoot"))
     		{
