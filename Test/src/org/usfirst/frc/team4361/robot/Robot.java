@@ -39,8 +39,8 @@ public class Robot extends IterativeRobot {
         chooser.addDefault("Default Auto", defaultAuto);
         chooser.addObject("My Auto", customAuto);
         SmartDashboard.putData("Auto choices", chooser);
-        track = new Tracking(108,89);
-        ave = new WeightedAverage(50,750);
+        track = new Tracking(127,88);
+        ave = new WeightedAverage(10,300);
         for(int i = 0; i < talon.length; i++)
         {
         	talon[i] = new Talon(i);
@@ -90,7 +90,7 @@ public class Robot extends IterativeRobot {
     	double[] centerX = table.getNumberArray("centerX", deafultVal);
     	double[] centerY = table.getNumberArray("centerY", deafultVal);
     	double[] width = table.getNumberArray("width",deafultVal);
-    	double[] length = table.getNumberArray("length", deafultVal);
+    	double[] length = table.getNumberArray("height", deafultVal);
     	double[] area = table.getNumberArray("area",deafultVal);
     	String dir = "";
     	double filter=0;

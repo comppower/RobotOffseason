@@ -79,15 +79,15 @@ public class WeightedAverage {
 			//this uses the areaInc to create the intervals for the bracket
 			if(average>minA+areaInc*2)
 			{
-				return.2;
+				return.25;
 			}
 			else if(average>minA+areaInc)
 			{
-				return.15;
+				return.2;
 			}
 			else
 			{
-				return.11;
+				return.15;
 			}
 		}
 		if(val.toUpperCase().equals("X"))
