@@ -28,6 +28,7 @@ public class Robot extends IterativeRobot {
     Talon[] talon = new Talon[4];
     Tracking track;
     NetworkTable table;
+    WeightedAverage ave; 
 	
     /**
      * This function is run when the robot is first started up and should be
@@ -39,6 +40,7 @@ public class Robot extends IterativeRobot {
         chooser.addObject("My Auto", customAuto);
         SmartDashboard.putData("Auto choices", chooser);
         track = new Tracking(108,89);
+        ave = new WeightedAverage(50,300);
         for(int i = 0; i < talon.length; i++)
         {
         	talon[i] = new Talon(i);
@@ -87,37 +89,52 @@ public class Robot extends IterativeRobot {
     	double[] deafultVal = new double[0];
     	double[] centerX = table.getNumberArray("centerX", deafultVal);
     	double[] centerY = table.getNumberArray("centerY", deafultVal);
+    	double[] width = table.getNumberArray("width",deafultVal);
+    	double[] length=table.getNumberArray("length", deafultVal);
+    	double[] area = table.getNumberArray("area",deafultVal);
+    	String dir = "";
+    	double filter=0;
    
     	if(centerX.length>0&&left.getRawButton(3))
     	{
-    		String dir = track.track(centerX[0], centerY[0]);
+    		if(!ave.cal)
+    		{
+    			cal(length, width, centerX, centerY);
+    		}
+    		else
+    		{
+    			double[] values = input(length, width, centerX, centerY, area);
+    			 dir = track.track(values[0], values[1]);
+    			 filter = values[2];
+    		}
+    		
     		if(dir.equals("left"))
     		{
     			talon[0].set(0);
     			talon[1].set(0);
-    			talon[2].set(-.2);
-    			talon[3].set(-.2);
+    			talon[2].set(-filter);
+    			talon[3].set(-filter);
     		}
     		if(dir.equals("right"))
     		{
-    			talon[0].set(.2);
-    			talon[1].set(.2);
+    			talon[0].set(filter);
+    			talon[1].set(filter);
     			talon[2].set(0);
     			talon[3].set(0);
     		}
     		if(dir.equals("forward"))
     		{
-    			talon[0].set(.2);
-    			talon[1].set(.2);
-    			talon[2].set(-.2);
-    			talon[3].set(-.2);
+    			talon[0].set(filter);
+    			talon[1].set(filter);
+    			talon[2].set(-filter);
+    			talon[3].set(-filter);
     		}
     		if(dir.equals("back"))
     		{
-    			talon[0].set(-.2);
-    			talon[1].set(-.2);
-    			talon[2].set(.2);
-    			talon[3].set(.2);
+    			talon[0].set(-filter);
+    			talon[1].set(-filter);
+    			talon[2].set(filter);
+    			talon[3].set(filter);
     		}
     		if(dir.equals("shoot"))
     		{
@@ -135,6 +152,79 @@ public class Robot extends IterativeRobot {
         	talon[3].set(left.getAxis(Joystick.AxisType.kY));
     	}
         
+    }
+    public void cal(double[] length, double[] width, double[] centerX, double[] centerY)
+    {
+    	//check to see if the array is full already
+    	ave.cal=true;
+		for(int i=0; i<ave.centerX.length; i++)
+		{
+			if(ave.centerX[i]==-1)
+			{
+				ave.cal=false;
+			}
+		}
+		//intializes values to look for the best hit
+    	int index =-1;
+		double score =0;
+		//calibrate this corScore value
+		double corScore=.7;
+		//replace this loop with a loop to look through length and make score
+		//length[i]/width[i]
+		for(int i=0; i<length.length; i++)
+		{
+			score = length[i]/width[i];
+			if(Math.abs(score-1)<Math.abs(corScore-1))
+			{
+				corScore=score;
+				index = i;
+			}
+		}
+		//do nothing if the index isn't changed
+		if(index ==-1)
+		{
+
+		}
+		else
+		{
+			//System.out.println(" 	"+corScore + " was closest at "+index);
+			//put in centerX[index] here instead of corScore
+			ave.xIn(centerX[index]);
+			ave.yIn(centerY[index]);
+		}
+    }
+    public double[] input(double[] length, double width[], double[] x, double[] y, double[] a)
+    {
+    	int index =-1;
+		double score =0;
+		//calibrate this corScore value
+		double corScore=.7;
+		//replace this loop with a loop to look through length and make score
+		//length[i]/width[i]
+		for(int i=0; i<length.length; i++)
+		{
+			score = length[i]/width[i];
+			if(Math.abs(score-1)<Math.abs(corScore-1))
+			{
+				corScore=score;
+				index = i;
+			}
+		}
+		//do nothing if the index isn't changed
+		if(index ==-1)
+		{
+
+		}
+		else
+		{
+			//System.out.println(" 	"+corScore + " was closest at "+index);
+			//put in centerX[index] here instead of corScore
+			ave.xIn(x[index]);
+			ave.yIn(y[index]);
+			ave.areaIn(a[index]);
+		}
+    	double[] def = {ave.getAverage("x"),ave.getAverage("y"), ave.getAverage("area")};
+    	return def;
     }
     
     /**
