@@ -40,7 +40,7 @@ public class Robot extends IterativeRobot {
         chooser.addObject("My Auto", customAuto);
         SmartDashboard.putData("Auto choices", chooser);
         track = new Tracking(108,89);
-        ave = new WeightedAverage(50,300);
+        ave = new WeightedAverage(50,750);
         for(int i = 0; i < talon.length; i++)
         {
         	talon[i] = new Talon(i);
@@ -90,7 +90,7 @@ public class Robot extends IterativeRobot {
     	double[] centerX = table.getNumberArray("centerX", deafultVal);
     	double[] centerY = table.getNumberArray("centerY", deafultVal);
     	double[] width = table.getNumberArray("width",deafultVal);
-    	double[] length=table.getNumberArray("length", deafultVal);
+    	double[] length = table.getNumberArray("length", deafultVal);
     	double[] area = table.getNumberArray("area",deafultVal);
     	String dir = "";
     	double filter=0;
@@ -100,12 +100,14 @@ public class Robot extends IterativeRobot {
     		if(!ave.cal)
     		{
     			cal(length, width, centerX, centerY);
+    			System.out.println("Calibrating");
     		}
     		else
     		{
     			double[] values = input(length, width, centerX, centerY, area);
     			 dir = track.track(values[0], values[1]);
     			 filter = values[2];
+    			 System.out.println(dir);
     		}
     		
     		if(dir.equals("left"))
