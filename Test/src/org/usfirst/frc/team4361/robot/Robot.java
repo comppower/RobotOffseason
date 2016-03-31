@@ -39,8 +39,8 @@ public class Robot extends IterativeRobot {
         chooser.addDefault("Default Auto", defaultAuto);
         chooser.addObject("My Auto", customAuto);
         SmartDashboard.putData("Auto choices", chooser);
-        track = new Tracking(128,86);
-        ave = new WeightedAverage(10,350);
+        track = new Tracking(144,46);
+        ave = new WeightedAverage(10,500);
         for(int i = 0; i < talon.length; i++)
         {
         	talon[i] = new Talon(i);
@@ -170,13 +170,13 @@ public class Robot extends IterativeRobot {
     	int index =-1;
 		double score =0;
 		//calibrate this corScore value
-		double corScore=.7;
+		double corScore=1;
 		//replace this loop with a loop to look through length and make score
 		//length[i]/width[i]
 		for(int i=0; i<length.length; i++)
 		{
 			score = length[i]/width[i];
-			if(Math.abs(score-1)<Math.abs(corScore-1))
+			if(Math.abs(score-.7)<Math.abs(corScore-.7))
 			{
 				corScore=score;
 				index = i;
@@ -200,13 +200,13 @@ public class Robot extends IterativeRobot {
     	int index =-1;
 		double score =0;
 		//calibrate this corScore value
-		double corScore=.7;
+		double corScore=1;
 		//replace this loop with a loop to look through length and make score
 		//length[i]/width[i]
 		for(int i=0; i<length.length; i++)
 		{
 			score = length[i]/width[i];
-			if(Math.abs(score-1)<Math.abs(corScore-1))
+			if(Math.abs(score-.7)<Math.abs(corScore-.7))
 			{
 				corScore=score;
 				index = i;
