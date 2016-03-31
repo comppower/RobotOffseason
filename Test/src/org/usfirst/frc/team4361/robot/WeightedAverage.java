@@ -10,9 +10,9 @@ public class WeightedAverage {
 	
 	public WeightedAverage(double minA,double maxA)
 	{
-		centerX = new double[8];
-		centerY = new double[8];
-		area = new double[8];
+		centerX = new double[6];
+		centerY = new double[6];
+		area = new double[6];
 		//minA and maxA are used to get three ranges for three motor settings
 		this.minA=minA;
 		this.maxA=maxA;
@@ -100,10 +100,10 @@ public class WeightedAverage {
 				}
 				else 
 				{
-					average += centerX[i]*2;
+					average += centerX[i]*3;
 				}
 			}
-			return average/12;
+			return average/9;
 		}
 		if(val.toUpperCase().equals("Y"))
 		{
@@ -115,10 +115,10 @@ public class WeightedAverage {
 				}
 				else 
 				{
-					average += centerY[i]*2;
+					average += centerY[i]*3;
 				}
 			}
-			return average/12;
+			return average/9;
 		}
 		return -1;
 
