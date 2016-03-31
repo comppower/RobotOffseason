@@ -20,7 +20,8 @@ public class Tracking {
 		//The left and right statements must be reversed, becasue the x adjustments change the y axis
 		//the back and forward statements are as they should be, becuase the x cooridnate is 0 when the robot
 		//is as far forward as possible to the target
-		if(Math.abs(corX-x)/corX>.15)
+		System.out.println(Math.abs(corY-y)/corY + " is y ratio");
+		if(Math.abs(corX-x)/corX>.1)
 		{
 			if(x>corX)
 			{
@@ -33,20 +34,20 @@ public class Tracking {
 				return "left";
 			}
 		}
-		if(Math.abs(y-corY)>.1)
+		if(Math.abs(y-corY)/corY>.1)
 		{
 			if(y<corY)
-			{
-				System.out.println("Move Back");
-				return "back";
-			}
-			if(y>corY)
 			{
 				System.out.println("Move Forward");
 				return "forward";
 			}
+			if(y>corY)
+			{
+				System.out.println("Move Back");
+				return "back";
+			}
 		}
-		if(Math.abs(y-corY)/corY<.1 && Math.abs(x-corX)/corX<.15)
+		if(Math.abs(corY-y)/corY<.1 && Math.abs(corX-x)/corX<.1)
 		{
 			System.out.println("shoot");
 			return "shoot";

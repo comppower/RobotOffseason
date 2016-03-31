@@ -25,7 +25,7 @@ public class Robot extends IterativeRobot {
     final String customAuto = "My Auto";
     String autoSelected;
     SendableChooser chooser;
-    Talon[] talon = new Talon[4];
+    Talon[] talon = new Talon[8];
     Tracking track;
     NetworkTable table;
     WeightedAverage ave; 
@@ -39,7 +39,7 @@ public class Robot extends IterativeRobot {
         chooser.addDefault("Default Auto", defaultAuto);
         chooser.addObject("My Auto", customAuto);
         SmartDashboard.putData("Auto choices", chooser);
-        track = new Tracking(65,115);
+        track = new Tracking(133,105);
         ave = new WeightedAverage(10,700);
         for(int i = 0; i < talon.length; i++)
         {
@@ -112,8 +112,8 @@ public class Robot extends IterativeRobot {
     		
     		if(dir.equals("left"))
     		{
-    			talon[0].set(0);
-    			talon[1].set(0);
+    			talon[0].set(-.15);
+    			talon[1].set(-.15);
     			talon[2].set(-.15);
     			talon[3].set(-.15);
     		}
@@ -121,8 +121,8 @@ public class Robot extends IterativeRobot {
     		{
     			talon[0].set(.15);
     			talon[1].set(.15);
-    			talon[2].set(0);
-    			talon[3].set(0);
+    			talon[2].set(.15);
+    			talon[3].set(.15);
     		}
     		if(dir.equals("forward"))
     		{
@@ -154,7 +154,7 @@ public class Robot extends IterativeRobot {
         	talon[3].set(left.getAxis(Joystick.AxisType.kY));
     	}
 
-    	/*if(right.getPOV()==0)
+    	if(right.getPOV()==0)
     	{
     		talon[6].set(.5);
     		talon[7].set(-.5);
@@ -184,7 +184,7 @@ public class Robot extends IterativeRobot {
     	{
     		talon[4].set(0);
     		talon[5].set(0);
-    	}*/
+    	}
         
     }
     public void cal(double[] length, double[] width, double[] centerX, double[] centerY)
