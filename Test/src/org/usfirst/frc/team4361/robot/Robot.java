@@ -85,6 +85,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
     	//merge start
     	//also pull the two classes
+    	//also make sure to update the centerX and Y values as well as area values 
     	Joystick left = new Joystick(0);
     	Joystick right = new Joystick(1);
     	table = NetworkTable.getTable("GRIP/myContoursReport");
