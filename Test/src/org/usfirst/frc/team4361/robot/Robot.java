@@ -83,6 +83,8 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+    	//merge start
+    	//also pull the two classes
     	Joystick left = new Joystick(0);
     	Joystick right = new Joystick(1);
     	table = NetworkTable.getTable("GRIP/myContoursReport");
@@ -159,13 +161,13 @@ public class Robot extends IterativeRobot {
 
     	if(right.getPOV()==0)
     	{
-    		talon[6].set(.5);
-    		talon[7].set(-.5);
+    		talon[6].set(1);
+    		talon[7].set(-1);
     	}
     	else if(right.getPOV()==180)
     	{
-    		talon[6].set(-.5);
-    		talon[7].set(.5);
+    		talon[6].set(-1);
+    		talon[7].set(1);
     	}
     	else 
     	{
@@ -188,8 +190,9 @@ public class Robot extends IterativeRobot {
     		talon[4].set(0);
     		talon[5].set(0);
     	}
-        
+        //end merge
     }
+    //pull this method
     public void cal(double[] length, double[] width, double[] centerX, double[] centerY)
     {
     	//check to see if the array is full already
@@ -230,6 +233,7 @@ public class Robot extends IterativeRobot {
 			ave.yIn(centerY[index]);
 		}
     }
+    //merge this method
     public double[] input(double[] length, double width[], double[] x, double[] y, double[] a)
     {
     	int index =-1;
