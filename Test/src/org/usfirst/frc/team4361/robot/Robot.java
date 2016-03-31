@@ -39,8 +39,8 @@ public class Robot extends IterativeRobot {
         chooser.addDefault("Default Auto", defaultAuto);
         chooser.addObject("My Auto", customAuto);
         SmartDashboard.putData("Auto choices", chooser);
-        track = new Tracking(144,46);
-        ave = new WeightedAverage(10,500);
+        track = new Tracking(116,87);
+        ave = new WeightedAverage(10,700);
         for(int i = 0; i < talon.length; i++)
         {
         	talon[i] = new Talon(i);
@@ -154,7 +154,7 @@ public class Robot extends IterativeRobot {
         	talon[3].set(left.getAxis(Joystick.AxisType.kY));
     	}
 
-    	if(right.getPOV()==0)
+    	/*if(right.getPOV()==0)
     	{
     		talon[6].set(.5);
     		talon[7].set(-.5);
@@ -184,7 +184,7 @@ public class Robot extends IterativeRobot {
     	{
     		talon[4].set(0);
     		talon[5].set(0);
-    	}
+    	}*/
         
     }
     public void cal(double[] length, double[] width, double[] centerX, double[] centerY)
@@ -208,7 +208,7 @@ public class Robot extends IterativeRobot {
 		for(int i=0; i<length.length; i++)
 		{
 			score = length[i]/width[i];
-			if(Math.abs(score-.7)<Math.abs(corScore-.7))
+			if(Math.abs(score-1.4)<Math.abs(corScore-1.4))
 			{
 				corScore=score;
 				index = i;

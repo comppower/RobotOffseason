@@ -25,12 +25,12 @@ public class Tracking {
 			if(x>corX)
 			{
 				System.out.println("Rotate Right");
-				return "left";
+				return "right";
 			}
 			if(x<corX)
 			{
 				System.out.println("Rotate Left");
-				return "right";
+				return "left";
 			}
 		}
 		if(Math.abs(y-corY)>.1)
