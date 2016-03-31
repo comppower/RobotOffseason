@@ -94,9 +94,11 @@ public class Robot extends IterativeRobot {
     	double[] area = table.getNumberArray("area",deafultVal);
     	String dir = "";
     	double filter=0;
+    	double speed=.15;
    
     	if(centerX.length>0&&left.getRawButton(3))
     	{
+    		System.out.println(talon[0].get()+ " is motor speed");
     		if(!ave.cal)
     		{
     			cal(length, width, centerX, centerY);
@@ -112,31 +114,32 @@ public class Robot extends IterativeRobot {
     		
     		if(dir.equals("left"))
     		{
-    			talon[0].set(-.15);
-    			talon[1].set(-.15);
-    			talon[2].set(-.15);
-    			talon[3].set(-.15);
+    			//1.5 to correct for slower turn
+    			talon[0].set(-speed);
+    			talon[1].set(-speed);
+    			talon[2].set(-speed);
+    			talon[3].set(-speed);
     		}
     		if(dir.equals("right"))
     		{
-    			talon[0].set(.15);
-    			talon[1].set(.15);
-    			talon[2].set(.15);
-    			talon[3].set(.15);
+    			talon[0].set(speed);
+    			talon[1].set(speed);
+    			talon[2].set(speed);
+    			talon[3].set(speed);
     		}
     		if(dir.equals("forward"))
     		{
-    			talon[0].set(.15);
-    			talon[1].set(.15);
-    			talon[2].set(-.15);
-    			talon[3].set(-.15);
+    			talon[0].set(speed*1.25);
+    			talon[1].set(speed*1.25);
+    			talon[2].set(-speed*1.25);
+    			talon[3].set(-speed*1.25);
     		}
     		if(dir.equals("back"))
     		{
-    			talon[0].set(-.15);
-    			talon[1].set(-.15);
-    			talon[2].set(.15);
-    			talon[3].set(.15);
+    			talon[0].set(-speed*1.25);
+    			talon[1].set(-speed*1.25);
+    			talon[2].set(speed*1.25);
+    			talon[3].set(speed*1.25);
     		}
     		if(dir.equals("shoot"))
     		{
