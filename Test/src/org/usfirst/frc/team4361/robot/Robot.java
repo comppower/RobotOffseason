@@ -153,6 +153,38 @@ public class Robot extends IterativeRobot {
         	talon[2].set(left.getAxis(Joystick.AxisType.kY));
         	talon[3].set(left.getAxis(Joystick.AxisType.kY));
     	}
+
+    	if(right.getPOV()==0)
+    	{
+    		talon[6].set(.5);
+    		talon[7].set(-.5);
+    	}
+    	else if(right.getPOV()==180)
+    	{
+    		talon[6].set(-.5);
+    		talon[7].set(.5);
+    	}
+    	else 
+    	{
+    		talon[6].set(0);
+    		talon[7].set(0);
+    	}
+    	
+    	if(right.getRawButton(1))
+    	{
+    		talon[4].set(1);
+    		talon[5].set(-1);
+    	}
+    	else if(left.getRawButton(1))
+    	{
+    		talon[4].set(-1);
+    		talon[5].set(1);
+    	}
+    	else
+    	{
+    		talon[4].set(0);
+    		talon[5].set(0);
+    	}
         
     }
     public void cal(double[] length, double[] width, double[] centerX, double[] centerY)
