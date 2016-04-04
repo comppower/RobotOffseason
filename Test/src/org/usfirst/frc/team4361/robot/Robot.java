@@ -1,13 +1,13 @@
 
 package org.usfirst.frc.team4361.robot;
 
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.*;
+
+import com.kauailabs.navx.frc.AHRS;
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -29,6 +29,7 @@ public class Robot extends IterativeRobot {
     Tracking track;
     NetworkTable table;
     WeightedAverage ave; 
+    AHRS ahrs;
 	
     /**
      * This function is run when the robot is first started up and should be
@@ -45,6 +46,7 @@ public class Robot extends IterativeRobot {
         {
         	talon[i] = new Talon(i);
         }
+        ahrs=new AHRS(SPI.Port.kMXP);
     }
     
 	/**
@@ -159,6 +161,8 @@ public class Robot extends IterativeRobot {
         	talon[2].set(left.getAxis(Joystick.AxisType.kY));
         	talon[3].set(left.getAxis(Joystick.AxisType.kY));
     	}
+    	//end merge
+       	System.out.println(ahrs.getPitch()+","+ ahrs.getRoll());
 
     	if(right.getPOV()==0)
     	{
@@ -191,7 +195,7 @@ public class Robot extends IterativeRobot {
     		talon[4].set(0);
     		talon[5].set(0);
     	}
-        //end merge
+      
     }
     //pull this method
     public void cal(double[] length, double[] width, double[] centerX, double[] centerY)
