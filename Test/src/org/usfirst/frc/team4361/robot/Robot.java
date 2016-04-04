@@ -20,7 +20,7 @@ import com.kauailabs.navx.frc.AHRS;
  * help>
  * 
  */
-public class Robot extends IterativeRobot {
+public class Robot extends IterativeRobot implements PIDOutput {
     final String defaultAuto = "Default";
     final String customAuto = "My Auto";
     String autoSelected;
@@ -30,7 +30,19 @@ public class Robot extends IterativeRobot {
     NetworkTable table;
     WeightedAverage ave; 
     AHRS ahrs;
+    
+	PIDController turnController;
 	
+    static final double kP = 0.03;
+    static final double kI = 0.00;
+    static final double kD = 0.00;
+    static final double kF = 0.00;
+    
+    static final double kToleranceDegrees = 2.0f;
+    
+    double rotateToAngleRate;
+    double distance;
+    Timer timer;
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -47,6 +59,15 @@ public class Robot extends IterativeRobot {
         	talon[i] = new Talon(i);
         }
         ahrs=new AHRS(SPI.Port.kMXP);
+        
+        turnController = new PIDController(kP, kI, kD, kF, ahrs, this);
+        turnController.setInputRange(-180.0f,  180.0f);
+        turnController.setOutputRange(-1.0, 1.0);
+        turnController.setAbsoluteTolerance(kToleranceDegrees);
+        turnController.setContinuous(true);
+        
+        distance =0;
+        timer = new Timer();
     }
     
 	/**
@@ -84,6 +105,12 @@ public class Robot extends IterativeRobot {
     /**
      * This function is called periodically during operator control
      */
+    public void teleopInit()
+    {
+		ahrs.reset();
+		ahrs.resetDisplacement();
+		timer.start();
+    }
     public void teleopPeriodic() {
     	//merge start
     	//also pull the two classes
@@ -100,6 +127,20 @@ public class Robot extends IterativeRobot {
     	String dir = "";
     	double filter=0;
     	double speed=.15;
+    	
+    	turnController.setSetpoint(90.0f);
+    	turnController.enable();
+    	//System.out.println(rotateToAngleRate);
+    	if(left.getRawButton(6))
+    	{
+    		ahrs.resetDisplacement();
+    		distance =0;
+    	}
+   
+    	//System.out.println(ahrs.getVelocityX() + " , " + ahrs.getVelocityY());
+    	distance += getDistance(ahrs.getVelocityY(), ahrs.getRawAccelY());
+    	System.out.println(distance);
+
    
     	if(centerX.length>0&&left.getRawButton(3))
     	{
@@ -162,7 +203,7 @@ public class Robot extends IterativeRobot {
         	talon[3].set(left.getAxis(Joystick.AxisType.kY));
     	}
     	//end merge
-       	System.out.println(ahrs.getPitch()+","+ ahrs.getRoll());
+
 
     	if(right.getPOV()==0)
     	{
@@ -279,5 +320,21 @@ public class Robot extends IterativeRobot {
     public void testPeriodic() {
     
     }
+
+	@Override
+	public void pidWrite(double output) 
+	{
+		rotateToAngleRate = output;
+	}
+	public double getDistance(double vel, double accel)
+	{
+		double distance =0;
+		if(timer.get()>0)
+		{
+			distance = timer.get()*vel+.5*accel*timer.get()*timer.get();
+			timer.reset();
+		}
+		return distance;
+	}
     
 }
