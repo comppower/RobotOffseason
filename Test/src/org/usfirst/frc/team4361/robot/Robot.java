@@ -144,7 +144,6 @@ public class Robot extends IterativeRobot implements PIDOutput {
    
     	if(centerX.length>0&&left.getRawButton(3))
     	{
-    		System.out.println(talon[0].get()+ " is motor speed");
     		if(!ave.cal)
     		{
     			cal(length, width, centerX, centerY);
